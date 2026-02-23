@@ -77,8 +77,7 @@ The Product Vision is provided on NGSOTI/Restena websites.
 The Roadmap is maintained on Gitlab in the shape of future milestones, associated future releases, and Gitlab Issues
 and/or Epics and/or defined Tasks associated to the Milestone.
 
-License
--------
+## License
 
 This software is licensed under [GNU Affero General Public License version 3](http://www.gnu.org/licenses/agpl-3.0.html)
 
@@ -89,3 +88,11 @@ Copyright (C) 2026 Cédric Renzi
 
 As mentionned in the collaboration section above, the Contributors hall-of-fame is maintained separately
 the file ```CONTRIBUTORS.md```.
+
+## Funding
+
+URLChecker-tools is co-funded by [Restena](https://www.restena.lu/) and by the European Union under [NGSOTI](https://restena.lu/fr/project/ngsoti) (Next Generation Security Operator Training Infrastructure) project.
+
+![EU logo](https://www.vulnerability-lookup.org/images/eu-funded.jpg)
+![NGSOTI logo](https://restena.lu/files/styles/large/public/inline-images/ngsoti-logo-verti-col.png)
+![Restena logo](https://restena.lu/sites/restena.lu/themes/site_theme/images/logo.svg)
