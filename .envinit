@@ -1,0 +1,4 @@
+# These configuration is meant to be used
+APPNAME="URL Checker Tools"
+PACKAGENAME="url_checker_tools"
+SETTINGSENVPREFIX="URLCHECKERTOOLS_"

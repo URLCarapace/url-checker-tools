@@ -1,0 +1,7 @@
+packagename="${PACKAGENAME}"
+debianpackagename=$(echo ${PACKAGENAME} | grep "s/_/-/g")
+buildplatform=amd64
+builddockername=DockerfileBuilder
+builddebianimage=bookworm-slim
+testdockername=DockerfileTester
+testdebianimage=bookworm-slim
