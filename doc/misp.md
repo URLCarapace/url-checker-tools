@@ -14,7 +14,7 @@ This document describes how to set up and use MISP (Malware Information Sharing 
    python -c "import keyring; keyring.set_password('urlchecker', 'misp', 'YOUR_API_KEY_HERE')"
 
    # Or use the keys.py tool:
-   python tools/keys.py add --account misp
+   python tools/manage_keys.py add --account misp
    # Then enter your API key when prompted
    ```
 

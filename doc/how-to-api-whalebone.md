@@ -59,9 +59,9 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 > accept: application/json
 > Wb-Access-Key: [REDACTED]
 > Wb-Secret-Key: [REDACTED]
-> 
+>
 * Request completely sent off
-< HTTP/2 200 
+< HTTP/2 200
 < date: Tue, 09 Sep 2025 12:14:44 GMT
 < content-type: application/json
 < x-ratelimit-limit: 100
@@ -69,7 +69,7 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 < x-ratelimit-reset: 1757420121
 < x-request-id: 04ba8ab993d511dc08c9f519b2d99733
 < strict-transport-security: max-age=31536000; includeSubDomains
-< 
+<
 { [44 bytes data]
 100    44    0    44    0     0    332      0 --:--:-- --:--:-- --:--:--   330
 * Connection #0 to host api.cloud.joindns4.eu left intact
@@ -81,5 +81,3 @@ Exemple de retour JSON:
     "porn"
   ]
 }
-
-
