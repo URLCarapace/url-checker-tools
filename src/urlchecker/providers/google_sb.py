@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Clean Google Safe Browsing provider implementation using new architecture."""
 
-from typing import Dict, List
+from typing import Dict
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 
 class GoogleSafeBrowsingProvider(BaseProvider):

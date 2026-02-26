@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive URL Checker Tools - Full-featured CLI with clean architecture.
+Comprehensive URLChecker-Tools - Full-featured CLI wrapper to various cheker tools
 
 Combines the new clean provider system with complete backward compatibility
 for all original CLI options and functionality.
@@ -9,11 +9,9 @@ for all original CLI options and functionality.
 import argparse
 import json
 import sys
-import time
 import uuid
 from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 
 from urlchecker.config.logging_config import WorkflowLogger, set_session_id
 from urlchecker.output.formatters import get_formatter
@@ -82,7 +80,6 @@ Examples:
         provider_group.add_argument(
             "--all", action="store_true", help="Use all available providers"
         )
-
 
         # Output format options
         parser.add_argument(
@@ -225,6 +222,7 @@ Examples:
         # Get baseline providers (always included unless --all overrides everything)
         try:
             from urlchecker.config.robot_config import ProviderConfig
+
             baseline_providers = ProviderConfig.get_baseline_providers()
         except Exception:
             baseline_providers = ["whois", "link_analyzer"]
@@ -871,6 +869,7 @@ Examples:
         # Calculate scoring data if requested (for inclusion in logs)
         if (args.score or getattr(args, "score_detail", False)) and results:
             from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+
             scorer = UnifiedThreatScorer()
             scoring_data = scorer.calculate_threat_score(results)
 
@@ -901,6 +900,7 @@ Examples:
                 # Use pre-calculated scoring data
                 if not scoring_data:
                     from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+
                     scorer = UnifiedThreatScorer()
                     scoring_data = scorer.calculate_threat_score(results)
 
@@ -965,7 +965,9 @@ Examples:
         if args.log and self.logger and not args.robot and output_str:
             try:
                 # Pass scoring data to the logger if available
-                log_path = self.logger.create_session_log(args.target, output_str, args.format, scoring_data=scoring_data)
+                log_path = self.logger.create_session_log(
+                    args.target, output_str, args.format, scoring_data=scoring_data
+                )
                 print(f"[INFO] Log saved to: {log_path}")
             except Exception as e:
                 print(f"[ERROR] Failed to create log file: {e}")
@@ -1194,6 +1196,7 @@ Examples:
 
         # Use unified scoring system for consistency with CLI display
         from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+
         scorer = UnifiedThreatScorer()
         scoring_data = scorer.calculate_threat_score(results)
 

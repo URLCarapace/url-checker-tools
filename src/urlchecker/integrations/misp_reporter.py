@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""MISP reporter implementation for threat intelligence integration."""
+"""MISP reporter implementation for threat intelligence integration - POC."""
 
-import json
 import logging
 import warnings
-from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from ..config.providers_enum import ProviderConfigTemplate
-from ..core.results import ProviderResult, ThreatLevel
-from ..core.utils import ConfigDict
+from urlchecker.config.providers_enum import ProviderConfigTemplate
+from urlchecker.core.results import ProviderResult
+from urlchecker.core.utils import ConfigDict
 
 
 class MISPReporter:
@@ -44,8 +42,7 @@ class MISPReporter:
         """Check if MISP reporter is properly configured."""
 
         have_key = bool(
-            getattr(self.config, "api_key", None)
-            or getattr(self.config, "key", None)
+            getattr(self.config, "api_key", None) or getattr(self.config, "key", None)
         )
         have_url = bool(getattr(self.config, "url", None))
         return bool(have_url and have_key)
@@ -364,6 +361,7 @@ class MISPReporter:
 
             # Add comprehensive threat scoring and metadata using unified scorer
             from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+
             scorer = UnifiedThreatScorer()
             scoring_data = scorer.calculate_threat_score(results)
 

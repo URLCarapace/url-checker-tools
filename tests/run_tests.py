@@ -80,7 +80,7 @@ class TestRunner:
                 ],
                 "importance": "Medium - ensures usable and safe output presentation",
             },
-            "test_security_edge_cases.py": {
+            "test_security_robustness.py": {
                 "purpose": "Tests security validation and system boundaries",
                 "key_areas": [
                     "Injection attack prevention (XSS, SQL, LDAP)",
@@ -115,26 +115,28 @@ class TestRunner:
         # Test files and their categories
         self.test_suites = {
             "Core Infrastructure": [
-                "test_core_infrastructure.py",
-                "test_cli_tools.py",
+                "test_base_provider_functionality.py",
+                "test_cli_functionality.py",
+                "test_provider_discovery.py",
+                "test_robot_config_functionality.py",
             ],
             "Network & API": [
-                "test_network_api.py",
+                "test_http_client_functionality.py",
             ],
             "Scanning Modules": [
-                "test_scanning_modules.py",
+
             ],
             "Analysis Engine": [
-                "test_analysis_engine.py",
+
             ],
             "Integration Tests": [
-                "test_integration.py",
+                "test_misp_integration_functionality.py",
             ],
             "Output & Formatting": [
-                "test_output_formatting.py",
+                "test_results_functionality.py",
             ],
             "Security & Edge Cases": [
-                "test_security_edge_cases.py",
+                "test_security_robustness.py",
             ],
             "Realistic Testing": [
                 "test_realistic_scanning.py",

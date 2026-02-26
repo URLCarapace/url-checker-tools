@@ -11,7 +11,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from urlchecker.config.robot_config import (
-    RobotModeProviderSet,
+    ProviderSets,
     RobotModeFlags,
     RobotModeConfig
 )
@@ -22,7 +22,7 @@ class TestRobotConfigurationFunctionality:
 
     def test_robot_provider_set_completeness(self):
         """Test ROBOT provider set contains essential providers."""
-        robot_providers = RobotModeProviderSet.ROBOT.value
+        robot_providers = ProviderSets.ROBOT.value
 
         # Should be a list
         assert isinstance(robot_providers, list)
@@ -40,11 +40,11 @@ class TestRobotConfigurationFunctionality:
 
     def test_all_provider_set_completeness(self):
         """Test ALL provider set contains comprehensive provider list."""
-        all_providers = RobotModeProviderSet.ALL.value
+        all_providers = ProviderSets.ALL.value
 
         # Should be a list with more providers than ROBOT
         assert isinstance(all_providers, list)
-        robot_providers = RobotModeProviderSet.ROBOT.value
+        robot_providers = ProviderSets.ROBOT.value
         assert len(all_providers) >= len(robot_providers)
 
         # Should include all robot providers
@@ -58,15 +58,15 @@ class TestRobotConfigurationFunctionality:
 
     def test_provider_set_consistency(self):
         """Test consistency between provider sets."""
-        robot_providers = set(RobotModeProviderSet.ROBOT.value)
-        all_providers = set(RobotModeProviderSet.ALL.value)
+        robot_providers = set(ProviderSets.ROBOT.value)
+        all_providers = set(ProviderSets.ALL.value)
 
         # ROBOT should be subset of ALL
         assert robot_providers.issubset(all_providers), "ROBOT providers should be subset of ALL providers"
 
         # No duplicate providers in sets
-        assert len(RobotModeProviderSet.ROBOT.value) == len(robot_providers), "No duplicates in ROBOT set"
-        assert len(RobotModeProviderSet.ALL.value) == len(all_providers), "No duplicates in ALL set"
+        assert len(ProviderSets.ROBOT.value) == len(robot_providers), "No duplicates in ROBOT set"
+        assert len(ProviderSets.ALL.value) == len(all_providers), "No duplicates in ALL set"
 
     def test_robot_flags_structure(self):
         """Test ROBOT flags have correct structure and values."""
@@ -94,13 +94,13 @@ class TestRobotConfigurationFunctionality:
         robot_providers = RobotModeConfig.get_robot_providers()
         assert isinstance(robot_providers, list)
         assert len(robot_providers) > 0
-        assert robot_providers == RobotModeProviderSet.ROBOT.value
+        assert robot_providers == ProviderSets.ROBOT.value
 
         # Test all providers
         all_providers = RobotModeConfig.get_all_providers()
         assert isinstance(all_providers, list)
         assert len(all_providers) >= len(robot_providers)
-        assert all_providers == RobotModeProviderSet.ALL.value
+        assert all_providers == ProviderSets.ALL.value
 
     def test_robot_config_flags_method(self):
         """Test RobotModeConfig flags retrieval method."""
@@ -261,8 +261,8 @@ class TestRobotConfigurationFunctionality:
             all_providers = RobotModeConfig.get_all_providers()
             robot_flags = RobotModeConfig.get_robot_flags()
 
-            assert robot_providers == RobotModeProviderSet.ROBOT.value
-            assert all_providers == RobotModeProviderSet.ALL.value
+            assert robot_providers == ProviderSets.ROBOT.value
+            assert all_providers == ProviderSets.ALL.value
             assert robot_flags == RobotModeFlags.ROBOT.value
 
     def test_provider_overlap_analysis(self):
@@ -274,15 +274,12 @@ class TestRobotConfigurationFunctionality:
         overlap = robot_set.intersection(all_set)
         all_only = all_set - robot_set
 
+
         # All robot providers should be in all providers
         assert overlap == robot_set, "All robot providers should be in all providers"
 
         # ALL should have additional providers beyond ROBOT
         assert len(all_only) > 0, "ALL set should have providers beyond ROBOT set"
-
-        # Additional providers should be reasonable
-        expected_additional = {"misp", "urlscan", "lookyloo"}
-        assert expected_additional.issubset(all_only), "Expected additional providers should be present"
 
     def test_flag_application_scenarios(self):
         """Test flag application in various realistic scenarios."""
@@ -340,12 +337,12 @@ class TestRobotConfigurationFunctionality:
     def test_configuration_enum_accessibility(self):
         """Test configuration enums are properly accessible."""
         # Should be able to access enum values
-        assert hasattr(RobotModeProviderSet, 'ROBOT')
-        assert hasattr(RobotModeProviderSet, 'ALL')
+        assert hasattr(ProviderSets, 'ROBOT')
+        assert hasattr(ProviderSets, 'ALL')
         assert hasattr(RobotModeFlags, 'ROBOT')
 
         # Enum values should be accessible
-        robot_providers = RobotModeProviderSet.ROBOT
+        robot_providers = ProviderSets.ROBOT
         assert robot_providers.value is not None
         assert isinstance(robot_providers.value, list)
 

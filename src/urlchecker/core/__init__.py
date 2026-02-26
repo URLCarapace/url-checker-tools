@@ -1,1 +1,1 @@
-"""Core functionality for URL checker."""
+"""Core functionality for URLChecker-Tools."""

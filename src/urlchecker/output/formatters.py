@@ -3,9 +3,8 @@
 
 import json
 from abc import ABC, abstractmethod
-from typing import Any, Dict
 
-from ..core.results import ProviderResult, ThreatLevel, WorkflowResult
+from urlchecker.core.results import ProviderResult, ThreatLevel, WorkflowResult
 
 
 class BaseFormatter(ABC):

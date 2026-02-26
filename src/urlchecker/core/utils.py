@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Simplified utility functions."""
+
 from typing import List, Optional
 from urllib.parse import urlparse
 

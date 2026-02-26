@@ -279,7 +279,13 @@ class WorkflowLogger:
 
         return synthesis_path, detailed_path
 
-    def create_session_log(self, target: str, content: str, format_type: str = "human", scoring_data: dict = None) -> Path:
+    def create_session_log(
+        self,
+        target: str,
+        content: str,
+        format_type: str = "human",
+        scoring_data: dict = None,
+    ) -> Path:
         """Create a single session log file (.log) for regular --log mode."""
         if not self.session_id:
             raise ValueError("Session ID required for session logging")
@@ -303,14 +309,11 @@ class WorkflowLogger:
                 parsed_content = json.loads(content)
                 log_data = {
                     "session_metadata": session_metadata,
-                    "results": parsed_content
+                    "results": parsed_content,
                 }
             except json.JSONDecodeError:
                 # If content isn't valid JSON, wrap it
-                log_data = {
-                    "session_metadata": session_metadata,
-                    "content": content
-                }
+                log_data = {"session_metadata": session_metadata, "content": content}
 
             # Add scoring data if available
             if scoring_data:
@@ -322,23 +325,29 @@ class WorkflowLogger:
             # Human format - create custom format that preserves line breaks
             log_lines = []
             log_lines.append("{")
-            log_lines.append('  "session_metadata": ' + json.dumps(session_metadata, indent=4).replace('\n', '\n  ').rstrip())
+            log_lines.append(
+                '  "session_metadata": '
+                + json.dumps(session_metadata, indent=4).replace("\n", "\n  ").rstrip()
+            )
             log_lines.append('  "content": [')
 
             # Split content into lines and format each as a JSON string
-            content_lines = content.split('\n') if content else []
+            content_lines = content.split("\n") if content else []
             for i, line in enumerate(content_lines):
                 comma = "," if i < len(content_lines) - 1 else ""
-                log_lines.append(f'    {json.dumps(line)}{comma}')
+                log_lines.append(f"    {json.dumps(line)}{comma}")
 
-            log_lines.append('  ]')
+            log_lines.append("  ]")
 
             # Add scoring data if available
             if scoring_data:
-                log_lines.append('  "scoring": ' + json.dumps(scoring_data, indent=4).replace('\n', '\n  ').rstrip())
+                log_lines.append(
+                    '  "scoring": '
+                    + json.dumps(scoring_data, indent=4).replace("\n", "\n  ").rstrip()
+                )
 
             log_lines.append("}")
-            log_content = '\n'.join(log_lines)
+            log_content = "\n".join(log_lines)
 
         try:
             with open(log_path, "w", encoding="utf-8") as f:

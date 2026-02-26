@@ -4,9 +4,9 @@
 import time
 from typing import Dict
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 
 class URLScanProvider(BaseProvider):
@@ -66,7 +66,10 @@ class URLScanProvider(BaseProvider):
 
         while elapsed < max_wait_seconds:
             # Show progress to user
-            print(f"  URLScan analysis in progress... ({elapsed}s/{max_wait_seconds}s)", end="\r")
+            print(
+                f"  URLScan analysis in progress... ({elapsed}s/{max_wait_seconds}s)",
+                end="\r",
+            )
 
             try:
                 # Get results

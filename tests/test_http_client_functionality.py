@@ -5,8 +5,7 @@ import json
 import sys
 import time
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
-from typing import Dict, Any
+from unittest.mock import Mock, patch
 
 import pytest
 import requests
@@ -14,7 +13,7 @@ import requests
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from urlchecker.core.http_client import HTTPClient
-from urlchecker.core.exceptions import APIRequestError, APIResponseError
+from urlchecker.core.exceptions import APIRequestError
 
 
 class TestHTTPClientFunctionality:

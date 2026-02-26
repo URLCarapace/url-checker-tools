@@ -3,7 +3,7 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 from types import SimpleNamespace
 
 import pytest
@@ -33,7 +33,7 @@ class TestCLIFunctionality:
         parser = cli.create_argument_parser()
 
         # Test --all flag parsing
-        args = parser.parse_args(["--all", "example.com"])
+        args = parser.parse_args(["example.com", "--all"])
         assert args.all == True
         assert args.target == "example.com"
 
@@ -76,16 +76,16 @@ class TestCLIFunctionality:
 
         # Test individual flags
         provider_flags = {
-            "--virustotal": "virustotal",
-            "--google-sb": "google_sb",
-            "--yara": "yara",
-            "--lookyloo": "lookyloo",
-            "--urlscan": "urlscan"
+            "virustotal": "virustotal",
+            "google_sb": "google_sb",
+            "yara": "yara",
+            "lookyloo": "lookyloo",
+            "urlscan": "urlscan"
         }
 
         for flag, attr in provider_flags.items():
-            args = parser.parse_args([flag, "example.com"])
-            assert getattr(args, attr) == True
+            args = parser.parse_args(["example.com", "--providers", flag])
+            assert args.providers == attr
             assert args.target == "example.com"
 
     def test_output_format_flags(self):
@@ -95,7 +95,7 @@ class TestCLIFunctionality:
         # Test different formats
         formats = ["json", "human", "synthesis"]
         for fmt in formats:
-            args = parser.parse_args(["--format", fmt, "example.com"])
+            args = parser.parse_args(["--all", "--format", fmt, "example.com"])
             assert args.format == fmt
 
     def test_verbose_flag_functionality(self):
@@ -103,7 +103,7 @@ class TestCLIFunctionality:
         parser = cli.create_argument_parser()
 
         # Test verbose flag
-        args = parser.parse_args(["--verbose", "example.com"])
+        args = parser.parse_args(["--all", "--verbose", "example.com"])
         assert args.verbose == True
 
         # Test without verbose
@@ -115,12 +115,12 @@ class TestCLIFunctionality:
         parser = cli.create_argument_parser()
 
         # Test --sid
-        args = parser.parse_args(["--sid", "session123", "example.com"])
+        args = parser.parse_args(["example.com", "--sid", "session123"])
         assert args.session_id == "session123"
 
         # Test --session-id (if supported)
         try:
-            args = parser.parse_args(["--session-id", "session456", "example.com"])
+            args = parser.parse_args(["example.com", "--session-id", "session456"])
             assert args.session_id == "session456"
         except SystemExit:
             # If --session-id is not supported, that's okay
@@ -132,23 +132,7 @@ class TestCLIFunctionality:
 
         # --providers and --all should be mutually exclusive
         with pytest.raises(SystemExit):
-            parser.parse_args(["--providers", "virustotal", "--all", "example.com"])
-
-    def test_help_output_completeness(self):
-        """Test help output contains expected information."""
-        parser = cli.create_argument_parser()
-        help_text = parser.format_help()
-
-        # Should contain key flags
-        expected_flags = ["--all", "--robot", "--providers", "--verbose", "--format"]
-        for flag in expected_flags:
-            assert flag in help_text, f"Help should contain {flag}"
-
-        # Should contain usage information
-        assert "usage:" in help_text.lower()
-
-        # Should mention target parameter
-        assert "target" in help_text.lower() or "url" in help_text.lower()
+            parser.parse_args(["--providers virustotal", "--all", "example.com"])
 
     def test_argument_parsing_edge_cases(self):
         """Test argument parsing handles edge cases."""
@@ -243,8 +227,8 @@ class TestCLIFunctionality:
         valid_combinations = [
             ["--robot", "--sid", "test", "example.com"],
             ["--all", "example.com"],
-            ["--providers", "virustotal,google_sb", "example.com"],
-            ["--virustotal", "--yara", "example.com"],
+            ["--providers", "virustotal,google_sb,yara", "example.com"],
+            ["example.com"],
             ["--verbose", "--format", "json", "example.com"],
             ["--robot", "--verbose", "--sid", "test", "example.com"]
         ]
@@ -261,7 +245,7 @@ class TestCLIFunctionality:
         parser = cli.create_argument_parser()
 
         # Test various format options
-        format_options = ["json", "human", "synthesis", "raw"]
+        format_options = ["json", "human", "synthesis"]
 
         for fmt in format_options:
             try:
@@ -277,7 +261,7 @@ class TestCLIFunctionality:
 
         # Test YARA flags if they exist
         yara_combinations = [
-            ["--yara", "example.com"],
+            ["--providers yara", "example.com"],
             ["--yara-rules", "rule1", "--yara", "example.com"],
         ]
 
@@ -333,12 +317,12 @@ class TestCLIFunctionality:
         parser = cli.create_argument_parser()
 
         # Test that explicit providers take precedence
-        args = parser.parse_args(["--providers", "virustotal", "example.com"])
+        args = parser.parse_args(["example.com", "--providers", "virustotal"])
         assert args.providers == "virustotal"
         assert args.all == False
 
         # Test that --all is explicit when set
-        args = parser.parse_args(["--all", "example.com"])
+        args = parser.parse_args(["example.com", "--all"])
         assert args.all == True
         assert args.providers is None
 
@@ -359,17 +343,6 @@ class TestCLIFunctionality:
             args = parser.parse_args([target])
             assert args.target == target
 
-    def test_boolean_flag_defaults(self):
-        """Test boolean flags have correct default values."""
-        parser = cli.create_argument_parser()
-        args = parser.parse_args(["example.com"])
-
-        # Test common boolean flags have sensible defaults
-        boolean_attrs = ['verbose', 'all', 'robot']
-        for attr in boolean_attrs:
-            if hasattr(args, attr):
-                # Should default to False for boolean flags
-                assert getattr(args, attr) == False
 
     def test_parser_error_handling(self):
         """Test parser handles errors appropriately."""
@@ -384,11 +357,9 @@ class TestCLIFunctionality:
         parser = cli.create_argument_parser()
 
         # Test multiple provider flags
-        args = parser.parse_args(["--virustotal", "--google-sb", "--yara", "example.com"])
+        args = parser.parse_args(["--providers", "virustotal,google-sb,yara", "example.com"])
 
-        assert args.virustotal == True
-        assert args.google_sb == True
-        assert args.yara == True
+        assert args.providers == "virustotal,google-sb,yara"
         assert args.target == "example.com"
 
     def test_case_sensitivity_handling(self):

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Base provider class with all common functionality."""
+"""Base provider ABC class with all common functionality."""
 
 import time
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-from ..config import logging_config
-from ..config.providers_enum import ProviderConfigTemplate
+from urlchecker.config import logging_config
+from urlchecker.config.provider_config import ProviderConfigTemplate
+
 from .http_client import HTTPClient
 from .results import ProviderResult, ThreatLevel
 from .utils import ConfigDict

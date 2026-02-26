@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Clean Whalebone provider implementation using new architecture."""
 
-from typing import Dict, List
+from typing import Dict
 from urllib.parse import urlparse
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 
 class WhaleboneProvider(BaseProvider):
@@ -73,7 +73,6 @@ class WhaleboneProvider(BaseProvider):
         else:
             # Categories not in blacklists are considered unknown
             return "unknown"
-
 
     def _parse_whalebone_response(self, target: str, response: Dict) -> ProviderResult:
         """Parse Whalebone API response into standard result.

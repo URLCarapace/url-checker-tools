@@ -3,18 +3,17 @@
 
 import glob
 import os
-import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import requests
 
 # Use yara-x only
 import yara_x as yara  # type: ignore
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 # Use yara-x TimeoutError directly
 YaraTimeoutError = yara.TimeoutError

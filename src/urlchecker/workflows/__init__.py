@@ -1,1 +1,1 @@
-"""Workflow management for distributed scanning."""
+"""Workflow management for distributed scanning - POC for WebApp"""
