@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Simplified API key management using system keyring."""
+
+import os
+
 import keyring
 import keyring.errors
 
@@ -156,7 +159,12 @@ class KeyManager:
 
     def _get_key(self, account: str, required: bool = True) -> str:
         """Get an API key from the keyring."""
-        key = keyring.get_password("urlchecker", account)
+        env_var_name = f"URLCHECKER_{account.upper()}"
+        if os.environ.get(env_var_name):
+            # Environment variable is set, skip keyring
+            key = os.environ.get(env_var_name)
+        else:
+            key = keyring.get_password("urlchecker", account)
 
         if key and key.strip():
             return key.strip()
@@ -165,7 +173,7 @@ class KeyManager:
             raise MissingAPIKeyError(
                 f"No API key found for {account}. "
                 f"Use the key management tool to add it: "
-                f"python tools/keys.py add --account {account}"
+                f"python tools/manage_keys.py add --account {account}"
             )
 
         return ""
