@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Simple workflow orchestrator for distributed scanning."""
+"""Simple workflow orchestrator for distributed scanning  - POC for WebApp"""
 
 import uuid
 from typing import Optional
 
-from ..config.logging_config import get_logger
+from urlchecker.config.logging_config import get_logger
 
 
 class WorkflowOrchestrator:

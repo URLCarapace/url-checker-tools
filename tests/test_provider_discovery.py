@@ -12,9 +12,8 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from urlchecker.core.base_provider import BaseProvider
-from urlchecker.core.results import ProviderResult, ThreatLevel
+from urlchecker.core.results import ProviderResult
 from urlchecker.core.key_manager import KeyManager
-from urlchecker.core.exceptions import MissingAPIKeyError
 
 
 def discover_provider_files():
@@ -575,7 +574,7 @@ class TestProviderDiscovery:
             print(f"  - Missing keys: {', '.join(missing_providers)}")
             print(f"\nTo add missing API keys, use:")
             for provider in missing_providers:
-                print(f"  python tools/keys.py add --account {provider}")
+                print(f"  python tools/manage_keys.py add --account {provider}")
 
         # This test always passes - it's informational
         assert True, "API key status check completed"

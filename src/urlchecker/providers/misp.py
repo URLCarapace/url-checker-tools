@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Clean MISP provider implementation using new architecture."""
+"""Clean MISP provider implementation using new architecture - POC"""
 
 from datetime import datetime, timedelta
 from typing import Any, Dict, List
 from urllib.parse import urlparse
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 
 class MISPProvider(BaseProvider):

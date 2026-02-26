@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Display constants and formatting utilities."""
+
 import os
 import sys
 

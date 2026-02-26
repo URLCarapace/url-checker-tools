@@ -13,15 +13,17 @@ from urllib.parse import urlparse
 
 import requests
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 
 class LinkAnalyzerProvider(BaseProvider):
     """Link Analyzer provider focusing on HTTP redirects and DNS resolution."""
 
-    def __init__(self, provider_name: str = "link_analyzer", config: Dict | None = None):
+    def __init__(
+        self, provider_name: str = "link_analyzer", config: Dict | None = None
+    ):
         # No dedicated config class; use base config via enum template if present
         super().__init__(provider_name, config)
 

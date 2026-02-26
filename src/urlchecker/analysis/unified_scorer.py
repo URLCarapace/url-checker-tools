@@ -3,8 +3,8 @@
 
 from typing import Any, Dict, List
 
-from ..config.scoring_config import ScoringConfig, get_scoring_config
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.config.scoring_config import ScoringConfig, get_scoring_config
+from urlchecker.core.results import ProviderResult
 
 
 class UnifiedThreatScorer:

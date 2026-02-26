@@ -4,7 +4,7 @@
 import sys
 import time
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 from typing import Dict, Any
 
 import pytest
@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from urlchecker.core.base_provider import BaseProvider
 from urlchecker.core.results import ProviderResult, ThreatLevel
-from urlchecker.core.exceptions import URLCheckerError, APIRequestError
+from urlchecker.core.exceptions import URLCheckerError
 
 
 class TestProvider(BaseProvider):

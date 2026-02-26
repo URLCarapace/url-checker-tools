@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Simplified tool for managing API keys."""
+
 import argparse
 import getpass
 import sys

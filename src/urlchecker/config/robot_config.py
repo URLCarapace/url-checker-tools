@@ -9,11 +9,7 @@ class ProviderSets(Enum):
     """Provider set configurations."""
 
     # Baseline providers - always run unless explicitly overridden
-    BASELINE = [
-        "whois",
-        "link_analyzer",
-        "misp"
-    ]
+    BASELINE = ["whois", "link_analyzer", "misp"]
 
     # Robot mode providers - full threat analysis suite for automation
     ROBOT = [
@@ -24,7 +20,7 @@ class ProviderSets(Enum):
         "virustotal",
         "google_sb",
         "yara",
-        "abuseipdb"
+        "abuseipdb",
     ]
 
     # All available providers - comprehensive analysis

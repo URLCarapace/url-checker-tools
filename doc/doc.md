@@ -1,4 +1,4 @@
-# URL Checker - Technical Documentation v0.0.2
+# URL Checker - Technical Documentation v0.1.0
 
 ## 1. Overview
 
@@ -71,19 +71,19 @@ uv run python tests/run_tests.py
 uv run python src/url_checker_tools.py https://example.com
 
 # Multi-provider analysis
-uv run python src/url_checker_tools.py https://example.com --urlhaus --virustotal --google-sb --lookyloo
+uv run python src/url_checker_tools.py https://example.com --providers urlhaus,virustotal,google_sb,lookyloo
 
 # Content scanning with YARA
-uv run python src/url_checker_tools.py https://example.com --yara
+uv run python src/url_checker_tools.py https://example.com --providers yara
 
 # File download analysis
-uv run python src/url_checker_tools.py https://example.com --yara --download
+uv run python src/url_checker_tools.py https://example.com --providers yara --download
 
 # Session tracking with logging
 uv run python src/url_checker_tools.py https://example.com --sid security_scan_001 --log
 
 # Condensed JSON synthesis for automation
-uv run python src/url_checker_tools.py https://example.com --urlhaus --virustotal --yara --synthesis
+uv run python src/url_checker_tools.py https://example.com --providers urlhaus,virustotal,yara --format synthesis
 ```
 
 ---
@@ -341,8 +341,8 @@ Create a new file in `src/urlchecker/providers/` (e.g., `new_provider.py`):
 """New Provider implementation using inheritance architecture."""
 
 from typing import Dict
-from ..core.base_provider import BaseProvider
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 class NewProvider(BaseProvider):
     """New threat intelligence provider implementation."""
@@ -743,19 +743,19 @@ python tools/manage_keys.py list
 **Store credentials securely:**
 ```bash
 # Add URLhaus API key
-uv run python tools/keys.py add --account urlhaus
+uv run python tools/manage_keys.py add --account urlhaus
 
 # Add VirusTotal API key (optional but recommended)
-uv run python tools/keys.py add --account virustotal
+uv run python tools/manage_keys.py add --account virustotal
 
 # Add Google Safe Browsing API key
-uv run python tools/keys.py add --account googlesafebrowsing
+uv run python tools/manage_keys.py add --account googlesafebrowsing
 
 # Add MISP API credentials (optional)
-uv run python tools/keys.py add --account misp
+uv run python tools/manage_keys.py add --account misp
 
 # Verify connectivity
-uv run python tools/keys.py test
+uv run python tools/manage_keys.py test
 ```
 
 ## API Key Registration Guide
@@ -1346,8 +1346,8 @@ uv run python -c "import yara, vt, requests, keyring; print('All dependencies OK
 **API authentication:**
 ```bash
 # Test stored credentials
-uv run python tools/keys.py test
-uv run python tools/keys.py list
+uv run python tools/manage_keys.py test
+uv run python tools/manage_keys.py list
 ```
 
 **YARA issues:**

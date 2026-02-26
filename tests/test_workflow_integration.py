@@ -3,7 +3,7 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 from types import SimpleNamespace
 
 import pytest

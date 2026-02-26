@@ -1,3 +1,5 @@
+# A project agnostic varenv for a unified Docker builder environment (pending on .envinit)
+
 packagename="${PACKAGENAME}"
 debianpackagename=$(echo ${PACKAGENAME} | grep "s/_/-/g")
 buildplatform=amd64

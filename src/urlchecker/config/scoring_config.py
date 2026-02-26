@@ -4,7 +4,7 @@
 from dataclasses import dataclass
 from typing import Dict, Tuple
 
-from ..core.results import ThreatLevel
+from urlchecker.core.results import ThreatLevel
 
 
 @dataclass

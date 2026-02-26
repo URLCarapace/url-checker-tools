@@ -6,9 +6,9 @@ from typing import Dict
 
 from pylookyloo import Lookyloo
 
-from ..core.base_provider import BaseProvider
-from ..core.celery_app import celery_app
-from ..core.results import ProviderResult, ThreatLevel
+from urlchecker.core.base_provider import BaseProvider
+from urlchecker.core.celery_app import celery_app
+from urlchecker.core.results import ProviderResult, ThreatLevel
 
 
 class LookyLooProvider(BaseProvider):
@@ -40,9 +40,7 @@ class LookyLooProvider(BaseProvider):
             return self._wait_and_get_results(lookyloo, target, capture_uuid)
 
         except Exception as e:
-            return self._create_error_result(
-                target, f"LookyLoo scan failed: {str(e)}"
-            )
+            return self._create_error_result(target, f"LookyLoo scan failed: {str(e)}")
 
     def _extract_uuid_from_response(self, uuid: str) -> str:
         """Extract actual UUID from LookyLoo response."""
@@ -51,7 +49,9 @@ class LookyLooProvider(BaseProvider):
             return uuid.split("/")[-1]
         return uuid
 
-    def _wait_and_get_results(self, lookyloo: Lookyloo, target: str, capture_uuid: str) -> ProviderResult:
+    def _wait_and_get_results(
+        self, lookyloo: Lookyloo, target: str, capture_uuid: str
+    ) -> ProviderResult:
         """Wait for capture completion and retrieve results using proper API."""
         max_attempts = 8  # 8 attempts = up to 40 seconds
         attempt = 0
@@ -63,7 +63,10 @@ class LookyLooProvider(BaseProvider):
             attempt += 1
 
             # Show progress to user
-            print(f"  LookyLoo capture in progress... [{attempt}/{max_attempts}]", end="\r")
+            print(
+                f"  LookyLoo capture in progress... [{attempt}/{max_attempts}]",
+                end="\r",
+            )
 
             try:
                 # Check capture status using pylookyloo
@@ -81,7 +84,9 @@ class LookyLooProvider(BaseProvider):
                         if info_data and not info_data.get("error"):
                             # Clear progress line and return results
                             print(" " * 50, end="\r")
-                            return self._parse_lookyloo_response(target, capture_uuid, info_data)
+                            return self._parse_lookyloo_response(
+                                target, capture_uuid, info_data
+                            )
                     except Exception:
                         # Data not ready yet, continue waiting
                         continue

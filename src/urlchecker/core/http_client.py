@@ -3,7 +3,7 @@
 
 import json
 import time
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -137,7 +137,9 @@ class HTTPClient:
         ):
             try:
                 import warnings
+
                 from urllib3.exceptions import InsecureRequestWarning
+
                 warnings.simplefilter("once", InsecureRequestWarning)
                 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
                 HTTPClient._tls_warning_suppressed = True
@@ -266,6 +268,7 @@ class HTTPClient:
 
             # Raise domain-specific error for tests expecting exceptions
             from .exceptions import APIRequestError
+
             raise APIRequestError(error_msg)
 
     def _validate_url_security(self, url: str) -> None:
@@ -343,9 +346,7 @@ class HTTPClient:
             return
 
         # Skip logging expected 404s during URLScan result polling
-        if (self.provider_name == "urlscan" and
-            "404" in error_msg and
-            "/result/" in url):
+        if self.provider_name == "urlscan" and "404" in error_msg and "/result/" in url:
             return
 
         self.logger.log_error(
