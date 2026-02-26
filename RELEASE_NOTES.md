@@ -1,7 +1,16 @@
 # Release Notes
-This file documents changes to URL Checker Tools that are relevant for the users to know.
+This file documents changes to URLChecker-Tools that are relevant for the users to know.
 
-## [Unreleased]
+## [0.2.0] - 2026-02-26
+Pre-release.
+### New Features
+-
+
+### Bug and various fixes
+-
+
+### Known issues
+-
 
 ## [X.Y.Z] - YYYY-MM-DD
 Initial release

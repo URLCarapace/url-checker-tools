@@ -1,7 +1,11 @@
 # Upgrading Notes
-This file documents important upgrading steps to deploy a new version of URL Checker Tools that are relevant
+This file documents important upgrading steps to deploy a new version of URLChecker-Tools that are relevant
 for the DevOps.
 Documentation is obviously incremental.
+
+## 0.2.0
+
+This is the pre-release. No upgrade notes.
 
 ## X.Y.Z
 

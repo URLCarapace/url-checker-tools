@@ -47,9 +47,9 @@ the point: a Merge Request is then opened based on the Issue. It might be necess
 ## Development
 
 A development helper is provided in the form of a Makefile.
-Inspiration is taken from (MIT License, see contrib subfolders, kept for legacy):
-- https://gitlab.com/tCR-lux/my-devops-playground/-/tree/master/Python/makedeb-a-la-spoti
-- https://gitlab.com/tCR-lux/my-devops-playground/-/tree/master/Python/packpy-src
+Inspiration is taken from (MIT License, see contrib subfolders, license files kept for legacy), improvements from it will be backported:
+- [my-devops-playground/makedeb-a-la-spoti](https://gitlab.com/tCR-lux/my-devops-playground/-/tree/master/Python/makedeb-a-la-spoti) Copyright © Cédric Renzi
+- [my-devops-playground/packpy-src](https://gitlab.com/tCR-lux/my-devops-playground/-/tree/master/Python/packpy-src) Copyright © Cédric Renzi
 
 Type ```make help``` from the king directory of this repository in order to get more insights.
 
@@ -95,6 +95,8 @@ This software is licensed under [GNU Affero General Public License version 3](ht
 Copyright (C) 2026 Fondation Restena
 Copyright (C) 2026 Cédric Renzi
 ```
+
+See details in LICENSE file for 3rd parties.
 
 As mentionned in the collaboration section above, the Contributors hall-of-fame is maintained separately
 the file ```CONTRIBUTORS.md```.
