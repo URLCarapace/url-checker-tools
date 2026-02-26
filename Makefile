@@ -132,7 +132,7 @@ $(foreach file,$(envfiles),$(eval export $(shell sed 's/=.*//' $(file))))
 PACKAGE_VERSION = $(shell cat VERSION)
 PACKAGE_PYTHON = $(shell cat .python-version)
 PACKAGE_SUFFIX = deployment-bundle.tar.gz
-PACKAGE_FULLNAME = ${URLCHECKERTOOLS_PACKAGE_NAME}_v${PACKAGE_VERSION}_Python${PACKAGE_PYTHON}-${PACKAGE_SUFFIX}
+PACKAGE_FULLNAME = ${PACKAGE_DEBIANNAME}_v${PACKAGE_VERSION}_Python${PACKAGE_PYTHON}-${PACKAGE_SUFFIX}
 
 # Houskeeping forcing variables
 # We reserve normally automation for CI/CD - Experimental in this repo

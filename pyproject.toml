@@ -20,7 +20,7 @@ classifiers = [
 dependencies = [
     "celery[redis]>=5.3.4",
     "keyring>=25",
-    "misp-modules",
+    #"misp-modules",
     "pydantic>=2.0.0",
     "pydantic-settings>=2.0.0",
     "pylookyloo>=1.31",
