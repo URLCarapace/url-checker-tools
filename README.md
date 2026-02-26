@@ -1,5 +1,15 @@
-# URLChecker Tools
-URL Checker Tools is a collection of tools that will be leveraged by the URL Checker Public Service
+# URLChecker-Tools
+URLChecker-Tools is a collection of tools that will be leveraged by the URLChecker Public Service:
+
+url-checker-tools is a Python CLI security analysis toolkit that performs comprehensive URL threat assessment through
+multi-source intelligence gathering. The tool queries external security APIs to collect threat intelligence data.
+It also includes of POC of leveraging custom YARA rule sets for local content inspection and pattern matching.
+It synthesizes findings from multiple sources into a unified and configurable security scoring and detailed report,
+providing actionable insights about URL safety. Designed as the backend engine for security analysis, it delivers
+structured JSON output compatible with automated workflows. Built for integration with the url-checker web platform,
+it serves as the heavy-lifting component for asynchronous security assessments. But the Command Line Interface also
+enables standalone usage for security researchers, incident response teams and personal usage.
+
 
 ## Getting started
 
@@ -45,13 +55,13 @@ Type ```make help``` from the king directory of this repository in order to get 
 
 ## Test and Deploy
 
-### Security and formatting/linting pipelines
+### Security and formatting/linting pipelines (TODO Gitlab -> GitHub)
 Each commit pushed to any branch triggers:
 - a Secret scanner,
 - a Security scanner,
 - a formatting and linting block of task. In case this fails, the pipeline does not go further.
 
-### Building, Testing and Delivering pipelines
+### Building, Testing and Delivering pipelines (TODO Gitlab -> GitHub)
 - Each commit to any branch triggers Tests (which does not require Build with Python and which allow to provide faster
 Testing results to the Developper). It is advised to rely on the same Test mechanism both in CI/CD and on the local
 Development environment (example: launcher script),
@@ -74,7 +84,7 @@ documentation on top of the content of this folder }}
 The Product Vision is provided on NGSOTI/Restena websites.
 
 ## Roadmap
-The Roadmap is maintained on Gitlab in the shape of future milestones, associated future releases, and Gitlab Issues
+The Roadmap is maintained on GitHub in the shape of future milestones, associated future releases, and GitHub Issues
 and/or Epics and/or defined Tasks associated to the Milestone.
 
 ## License
