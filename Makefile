@@ -215,7 +215,7 @@ update_deps:
 # Run Application
 run:
 	uv run src/url_checker_tools.py \
-	  "https://www.google.com";
+	  $$target_url;
 
 run_robot:
 	uv run src/url_checker_tools.py \
@@ -376,28 +376,67 @@ nuke: clean distclean testclean venvclean
 ################
 # Makefile Doc #
 ################
+help:
+	echo ""
+	echo -e "${BLUE}${BOLD}### I am your quick and dirty Help file :) ###${RESET}"
+	echo ""
+	echo -e "${BOLD}# Run make with targets like:${RESET}"
+	echo "make target someparameter=\"somevalue\""
+	echo ""
+	echo -e "${GREEN}# Available combinations arguments/targets/description:${RESET}"
+	echo ""
+	echo -e "${BOLD}🛠️  Initialize local dev environment:${RESET}"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "configure_repo_dev" "/" "Configure local Python3 venv + pre-commit hooks"
+	echo ""
+	echo -e "${BOLD}📦 Development lifecycle:${RESET}"
+	@printf "  %-20s %s %-20s %s %s\n" "[target_url="your-url-to-check"]" "/" "run" "/"  "Example run of the CLI tool against url, default to www.google.com"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "malrun_robot" "/"  "Example run of the CLI tool in ROBOT mode against a wicar URL (test)"
+	@printf "  %-20s %s %-20s %s %s\n" "[target_url="your-url-to-check"]" "/" "run_robot" "/"  "Run in Robot mode against a parametrised URL"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "test" "/"  "Run test suite"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "format_and_lint" "/"  "Format + lint (pre-commit style)"
+	@printf "  %-20s %s %-20s %s %s\n" "[new_package="package-name"]" "/" "add_newdep-dev" "/"  "Just add one new dep in dev mode"
+	echo ""
+	echo -e "${BOLD}🔥 Build, 🌬️  Publish and 🚀 Release:${RESET}"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "build" "/" "Build locally a .tar.gz for distribution"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "publish" "/" "Publish the build to a Registry (tested with Gitlab on-prem instances)"
+	echo ""
+	echo -e "${BOLD}🧪 Tests:${RESET}"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "test_units" "/" "Run the test suite (WIP)"
+	echo ""
+	echo -e "${BOLD}🧹 Housekeeping:${RESET}"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "format_and_lint" "/" "Run the formatter and linter our of pre-commit hooks"
+	@printf "  %-20s %s %-20s %s %s\n" "[version_repo=X.Y.Z]" "/" "bump_version" "/" "Bump version + tag (use version_repo=X.Y.Z)"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "clean" "/" "Clean Python artifacts"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "coverageclean" "/" "Clean Coverage test artifacts"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "distclean" "/" "Clean Build and Dist artifacts"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "venvclean" "/" "Clean .venv artifacts"
+	@printf "  %-20s %s %-20s %s %s\n" "[none]" "/" "nuke" "/" "Chain the cleaning steps above"
+	echo ""
+	echo -e "${BOLD}💡 Examples:${RESET}"
+	echo "  make configure_repo_dev"
+	echo "  make run"
+	echo "  make bump_version version_repo=1.2.3 tag_message=\"Release v1.2.3\""
+	echo ""
+	echo -e "${BOLD}📝 Default arguments that can be superseded on CLI:${RESET}"
+	echo "- automatic=\"N\""
+	echo "- version_repo=\"0.0.0\""
+	echo "-	tag_message=\"\""
+	echo "- new_package=\"\""
+	echo "- target_url=\"https://www.google.com\""
+	echo ""
+	echo "To provide API RO Tokens, configure the .env and manage it with care or, better use the key_manager tool to integrate to keychain"
+	echo "For publishing to your Registry, configure the .envdev varenvs"
+	@printf "\033[0;32m%s\033[0m\n" "Run 'make help' anytime for this reference"
 
-help :
-	echo ""
-	echo "\033[0;35m### I am your quick and dirty Help file :) ###\033[0;0m"
-	echo ""
-	echo "\033[0;34m# Run the make with the command as follow, with the arguments applicable to the wanted target:\033[0;0m"
-	echo "make target \\"
-	echo "     someparameter=\"somevalue\" \\"
-	echo ""
-	echo "Note: the arguments to be passed in to the make target command are depending on the wanted target."
-	echo ""
-	echo "\033[0;34m# Where target is part of the following list (with in brackets the argument hosts to be used):\033[0;0m"
-	echo "\033[0;33m* Development Environment:\033[0;0m"
-	echo "  * [none] configure_repo_dev (configure the local Python3 Virtual Environment and the pre-commit hooks)"
-	echo "  * [none] run (run the Flask application with the Development server)"
-	echo "  * [none] test (run the Flask Test Suite)"
-	echo "  * [none] format_and_lint (format and lint the code out of a pre-commit, but using the exact same configuration)"
-	echo "\033[0;33m* Housekeeping targets:\033[0;0m"
-	echo "  * [none] bump_version (requires the definition of parameter version_repo=X.Y.Z on CLI, tag_message is also an optional facility to document a Git tag)"
-	echo "  * clean"
-	echo ""
-	echo "\033[0;34m# Default arguments are:\033[0;0m"
-	echo "* someparameter = \"somevalue\""
-	echo ""
-	echo "TODO"
+# help:
+#	@echo "\033[0;35murl-checker Makefile Help\033[0m"
+#	@echo ""
+#	@awk '/^[a-zA-Z0-9_-]+:/ { \
+#		helpMessage = match(lastLine, /^# (.*)/); \
+#		if (helpMessage) { \
+#			helpCommand = substr($$1, 0, index($$1, ":")-1); \
+#			helpMessage = substr(lastLine, RSTART+2); \
+#			print "\033[0;33m", helpCommand "\033[0m", helpMessage; \
+#		} \
+#	} { lastLine = $$0 }' $(MAKEFILE_LIST)
+#
