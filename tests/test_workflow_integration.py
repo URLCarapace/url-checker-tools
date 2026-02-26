@@ -10,7 +10,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
 
 
 class TestWorkflowIntegration:
@@ -108,7 +108,7 @@ class TestWorkflowIntegration:
         # Test robot flag application
         with patch('urlchecker.config.robot_config.RobotModeConfig.apply_robot_flags') as mock_apply:
             if args.robot:
-                from urlchecker.config.robot_config import RobotModeConfig
+                from url_checker_tools.config.robot_config import RobotModeConfig
                 RobotModeConfig.apply_robot_flags(args)
                 mock_apply.assert_called_once()
 
@@ -432,8 +432,8 @@ class TestWorkflowIntegration:
             mock_get_logger.return_value = mock_logger
 
             # Test logging in various workflow components
-            from urlchecker.core.base_provider import BaseProvider
-            from urlchecker.core.http_client import HTTPClient
+            from url_checker_tools.core.base_provider import BaseProvider
+            from url_checker_tools.core.http_client import HTTPClient
 
             # Test provider logging
             try:

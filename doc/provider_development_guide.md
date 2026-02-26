@@ -47,8 +47,8 @@ provider_modules = [
 ### 5. Test Your Provider
 
 ```python
-from urlchecker.providers.your_provider import YourProviderProvider
-from urlchecker.providers.base import ProviderConfig
+from url_checker_tools.providers.your_provider import YourProviderProvider
+from url_checker_tools.providers.base import ProviderConfig
 
 # Configure provider
 config = ProviderConfig(
@@ -209,8 +209,8 @@ Create `tests/test_your_provider.py`:
 
 ```python
 import pytest
-from urlchecker.providers.your_provider import YourProviderProvider
-from urlchecker.providers.base import ProviderConfig
+from url_checker_tools.providers.your_provider import YourProviderProvider
+from url_checker_tools.providers.base import ProviderConfig
 
 def test_provider_initialization():
     provider = YourProviderProvider()
@@ -235,13 +235,13 @@ def test_provider_scan_url():
 Test with the full system:
 
 ```python
-from urlchecker.providers.manager import ProviderManager
+from url_checker_tools.providers.manager import ProviderManager
 
 def test_provider_integration():
     manager = ProviderManager()
 
     # Configure your provider
-    from urlchecker.providers.base import ProviderConfig
+    from url_checker_tools.providers.base import ProviderConfig
     config = ProviderConfig(enabled=True, api_key_required=False)
 
     provider = manager.registry.create_provider("your_provider", config)

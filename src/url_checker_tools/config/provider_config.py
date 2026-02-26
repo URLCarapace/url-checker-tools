@@ -201,8 +201,8 @@ class ProviderConfigTemplate:
         try:
             import os
 
-            from urlchecker.core.exceptions import MissingAPIKeyError
-            from urlchecker.core.key_manager import KeyManager
+            from url_checker_tools.core.exceptions import MissingAPIKeyError
+            from url_checker_tools.core.key_manager import KeyManager
 
             # VirusTotal
             try:

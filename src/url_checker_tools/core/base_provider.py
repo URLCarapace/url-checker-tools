@@ -5,8 +5,8 @@ import time
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-from urlchecker.config import logging_config
-from urlchecker.config.provider_config import ProviderConfigTemplate
+from url_checker_tools.config import logging_config
+from url_checker_tools.config.provider_config import ProviderConfigTemplate
 
 from .http_client import HTTPClient
 from .results import ProviderResult, ThreatLevel

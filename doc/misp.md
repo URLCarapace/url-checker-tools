@@ -57,7 +57,7 @@ MISP events are created automatically when URLChecker detects threats at or abov
 ### Event Structure
 - **Info**: "URLChecker Threat Detection: [URL]"
 - **Analysis Level**: Completed
-- **Threat Level**: Mapped from URLChecker verdict
+- **Threat Level**: Mapped from url_checker_tools verdict
 - **Tags**: Automated classification and session tracking
 - **Distribution**: Organization only (can be configured)
 

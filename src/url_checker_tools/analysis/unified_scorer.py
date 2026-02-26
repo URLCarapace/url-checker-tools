@@ -3,8 +3,8 @@
 
 from typing import Any, Dict, List
 
-from urlchecker.config.scoring_config import ScoringConfig, get_scoring_config
-from urlchecker.core.results import ProviderResult
+from url_checker_tools.config.scoring_config import ScoringConfig, get_scoring_config
+from url_checker_tools.core.results import ProviderResult
 
 
 class UnifiedThreatScorer:

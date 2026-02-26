@@ -11,9 +11,9 @@ import requests
 # Use yara-x only
 import yara_x as yara  # type: ignore
 
-from urlchecker.core.base_provider import BaseProvider
-from urlchecker.core.celery_app import celery_app
-from urlchecker.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.core.base_provider import BaseProvider
+from url_checker_tools.core.celery_app import celery_app
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
 
 # Use yara-x TimeoutError directly
 YaraTimeoutError = yara.TimeoutError

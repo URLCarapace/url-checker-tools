@@ -307,7 +307,7 @@ class TestCLIFunctionality:
 
         # In actual code, this would be called when --robot is used
         if args.robot:
-            from urlchecker.config.robot_config import RobotModeConfig
+            from url_checker_tools.config.robot_config import RobotModeConfig
             RobotModeConfig.apply_robot_flags(args)
 
         mock_apply_flags.assert_called_once_with(args)

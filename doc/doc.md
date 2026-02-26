@@ -341,8 +341,8 @@ Create a new file in `src/urlchecker/providers/` (e.g., `new_provider.py`):
 """New Provider implementation using inheritance architecture."""
 
 from typing import Dict
-from urlchecker.core.base_provider import BaseProvider
-from urlchecker.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.core.base_provider import BaseProvider
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
 
 class NewProvider(BaseProvider):
     """New threat intelligence provider implementation."""
@@ -509,7 +509,7 @@ PROVIDER_CLASSES = {
 #### Provider Testing:
 ```bash
 # Test new provider implementation
-python -c "from urlchecker.providers.new_provider import NewProvider; p = NewProvider(); print(p.scan('https://example.com'))"
+python -c "from url_checker_tools.providers.new_provider import NewProvider; p = NewProvider(); print(p.scan('https://example.com'))"
 
 # Test with CLI integration
 python src/url_checker_tools.py https://example.com --new-provider
@@ -1068,7 +1068,7 @@ uv run python src/url_checker_tools.py https://example.com --synthesis --urlhaus
 ### 9.1 Security Automation
 
 ```python
-from urlchecker import URLChecker
+from url_checker_tools import URLChecker
 import json
 
 # Initialize with synthesis enabled
@@ -1102,7 +1102,7 @@ elif assessment["requires_human_review"]:
 
 ```python
 from flask import Flask, request, jsonify
-from urlchecker import URLChecker
+from url_checker_tools import URLChecker
 
 app = Flask(__name__)
 checker = URLChecker(
@@ -1225,7 +1225,7 @@ logs/
 ### 11.1 Programmatic Interface
 
 ```python
-from urlchecker import URLChecker
+from url_checker_tools import URLChecker
 
 # Basic usage
 checker = URLChecker()

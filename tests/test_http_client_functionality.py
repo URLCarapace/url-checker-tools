@@ -12,8 +12,8 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.core.http_client import HTTPClient
-from urlchecker.core.exceptions import APIRequestError
+from url_checker_tools.core.http_client import HTTPClient
+from url_checker_tools.core.exceptions import APIRequestError
 
 
 class TestHTTPClientFunctionality:

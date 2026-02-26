@@ -11,9 +11,9 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.core.base_provider import BaseProvider
-from urlchecker.core.results import ProviderResult
-from urlchecker.core.key_manager import KeyManager
+from url_checker_tools.core.base_provider import BaseProvider
+from url_checker_tools.core.results import ProviderResult
+from url_checker_tools.core.key_manager import KeyManager
 
 
 def discover_provider_files():
@@ -263,7 +263,7 @@ class TestProviderDiscovery:
         provider_classes = discover_provider_classes()
 
         try:
-            from urlchecker.config.providers_enum import ProviderConfigTemplate
+            from url_checker_tools.config.providers_enum import ProviderConfigTemplate
 
             # Get all registered provider configs
             all_configs = ProviderConfigTemplate.get_all_provider_configs()
@@ -291,7 +291,7 @@ class TestProviderDiscovery:
         file_name, class_name, provider_class = provider_info
 
         try:
-            from urlchecker.config.providers_enum import ProviderConfigTemplate
+            from url_checker_tools.config.providers_enum import ProviderConfigTemplate
 
             # Check if provider has configuration template
             all_configs = ProviderConfigTemplate.get_all_provider_configs()

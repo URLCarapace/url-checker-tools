@@ -5,9 +5,9 @@ import logging
 import warnings
 from typing import Any, Dict, List, Optional
 
-from urlchecker.config.providers_enum import ProviderConfigTemplate
-from urlchecker.core.results import ProviderResult
-from urlchecker.core.utils import ConfigDict
+from url_checker_tools.config.providers_enum import ProviderConfigTemplate
+from url_checker_tools.core.results import ProviderResult
+from url_checker_tools.core.utils import ConfigDict
 
 
 class MISPReporter:
@@ -360,7 +360,7 @@ class MISPReporter:
                         )
 
             # Add comprehensive threat scoring and metadata using unified scorer
-            from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+            from url_checker_tools.analysis.unified_scorer import UnifiedThreatScorer
 
             scorer = UnifiedThreatScorer()
             scoring_data = scorer.calculate_threat_score(results)

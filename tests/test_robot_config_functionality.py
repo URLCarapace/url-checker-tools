@@ -10,7 +10,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.config.robot_config import (
+from url_checker_tools.config.robot_config import (
     ProviderSets,
     RobotModeFlags,
     RobotModeConfig

@@ -11,9 +11,9 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.core.base_provider import BaseProvider
-from urlchecker.core.results import ProviderResult, ThreatLevel
-from urlchecker.core.exceptions import URLCheckerError
+from url_checker_tools.core.base_provider import BaseProvider
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.core.exceptions import URLCheckerError
 
 
 class TestProvider(BaseProvider):

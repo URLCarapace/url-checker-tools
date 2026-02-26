@@ -4,7 +4,7 @@
 import json
 from abc import ABC, abstractmethod
 
-from urlchecker.core.results import ProviderResult, ThreatLevel, WorkflowResult
+from url_checker_tools.core.results import ProviderResult, ThreatLevel, WorkflowResult
 
 
 class BaseFormatter(ABC):

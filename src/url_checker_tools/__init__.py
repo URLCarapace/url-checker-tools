@@ -6,9 +6,9 @@ threat intelligence sources with distributed Celery workflows.
 """
 
 # Import core components of new architecture
-from urlchecker.core.results import ProviderResult, ThreatLevel, WorkflowResult
-from urlchecker.output.formatters import get_formatter
-from urlchecker.workflows.orchestrator import WorkflowOrchestrator
+from url_checker_tools.core.results import ProviderResult, ThreatLevel, WorkflowResult
+from url_checker_tools.output.formatters import get_formatter
+from url_checker_tools.workflows.orchestrator import WorkflowOrchestrator
 
 __version__ = "0.2.0"
 __authors__ = "see CONTRIBUTORS.md"

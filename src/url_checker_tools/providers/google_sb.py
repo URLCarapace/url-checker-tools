@@ -3,9 +3,9 @@
 
 from typing import Dict
 
-from urlchecker.core.base_provider import BaseProvider
-from urlchecker.core.celery_app import celery_app
-from urlchecker.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.core.base_provider import BaseProvider
+from url_checker_tools.core.celery_app import celery_app
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
 
 
 class GoogleSafeBrowsingProvider(BaseProvider):

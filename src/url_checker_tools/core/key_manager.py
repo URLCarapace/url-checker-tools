@@ -6,7 +6,7 @@ import os
 import keyring
 import keyring.errors
 
-from urlchecker.core.exceptions import MissingAPIKeyError
+from url_checker_tools.core.exceptions import MissingAPIKeyError
 
 
 class KeyManager:

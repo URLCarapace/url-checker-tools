@@ -17,9 +17,9 @@ try:
 except Exception:
     pass
 
-from urlchecker.config.display_constants import DisplayConstants
-from urlchecker.core.exceptions import MissingAPIKeyError
-from urlchecker.core.key_manager import KeyManager
+from url_checker_tools.config.display_constants import DisplayConstants
+from url_checker_tools.core.exceptions import MissingAPIKeyError
+from url_checker_tools.core.key_manager import KeyManager
 
 # Service name used in keyring storage (must match KeyManager)
 SERVICE_NAME = "urlchecker"

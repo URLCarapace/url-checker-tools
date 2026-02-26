@@ -4,7 +4,7 @@
 import uuid
 from typing import Optional
 
-from urlchecker.config.logging_config import get_logger
+from url_checker_tools.config.logging_config import get_logger
 
 
 class WorkflowOrchestrator:

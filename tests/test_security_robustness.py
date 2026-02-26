@@ -11,8 +11,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.core.results import ProviderResult, ThreatLevel
-from urlchecker.core.exceptions import URLCheckerError, APIRequestError
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.core.exceptions import URLCheckerError, APIRequestError
 
 
 class TestSecurityRobustness:
@@ -130,7 +130,7 @@ class TestSecurityRobustness:
     def test_error_handling_robustness(self):
         """Test robust error handling across components."""
         # Test various error scenarios
-        from urlchecker.core.base_provider import BaseProvider
+        from url_checker_tools.core.base_provider import BaseProvider
 
         class ErrorProneProvider(BaseProvider):
             def __init__(self, error_type="none"):
@@ -282,7 +282,7 @@ class TestSecurityRobustness:
         }
 
         # Test that sensitive config can be handled safely
-        from urlchecker.core.utils import ConfigDict
+        from url_checker_tools.core.utils import ConfigDict
         config = ConfigDict(sensitive_config)
 
         # Should be able to access config values
@@ -394,7 +394,7 @@ class TestSecurityRobustness:
 
         try:
             # Force an error with sensitive config
-            from urlchecker.core.base_provider import BaseProvider
+            from url_checker_tools.core.base_provider import BaseProvider
 
             class SensitiveErrorProvider(BaseProvider):
                 def __init__(self):
@@ -425,7 +425,7 @@ class TestSecurityRobustness:
 
     def test_rate_limiting_robustness(self):
         """Test rate limiting and resource throttling."""
-        from urlchecker.core.http_client import HTTPClient
+        from url_checker_tools.core.http_client import HTTPClient
 
         # Test HTTP client rate limiting
         with patch('requests.get') as mock_get:
@@ -485,7 +485,7 @@ class TestSecurityRobustness:
 
     def test_timeout_handling_robustness(self):
         """Test robust timeout handling."""
-        from urlchecker.core.http_client import HTTPClient
+        from url_checker_tools.core.http_client import HTTPClient
         import requests
 
         # Test HTTP client timeout handling

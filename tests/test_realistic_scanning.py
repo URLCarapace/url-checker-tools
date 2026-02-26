@@ -20,7 +20,7 @@ class TestRealisticYARAScanning:
         """Set up test fixtures."""
         # Import here to avoid import errors if YARA is not available
         try:
-            from urlchecker.scanning.yara_scanner import YaraScanner
+            from url_checker_tools.scanning.yara_scanner import YaraScanner
 
             self.scanner = YaraScanner()
         except ImportError:
@@ -96,8 +96,8 @@ class TestRealisticExternalServices:
     def setup_method(self):
         """Set up test fixtures."""
         try:
-            from urlchecker.network.api_client import ApiClient
-            from urlchecker.scanning.google_sb_scanner import GoogleSafeBrowsingScanner
+            from url_checker_tools.network.api_client import ApiClient
+            from url_checker_tools.scanning.google_sb_scanner import GoogleSafeBrowsingScanner
 
             self.gsb_scanner = GoogleSafeBrowsingScanner()
             self.api_client = ApiClient()
@@ -216,7 +216,7 @@ class TestRealWorldScenarios:
         ]
 
         try:
-            from urlchecker.scanning.whois_scanner import WhoisScanner
+            from url_checker_tools.scanning.whois_scanner import WhoisScanner
 
             scanner = WhoisScanner()
 
@@ -257,7 +257,7 @@ class TestRealWorldScenarios:
         xss_in_urls = ["https://example.com/page?param=<script>alert(1)</script>"]
 
         try:
-            from urlchecker.core.utils import validate_target
+            from url_checker_tools.core.utils import validate_target
 
             # Test dangerous protocols - these should be rejected
             for dangerous_input in dangerous_protocols:

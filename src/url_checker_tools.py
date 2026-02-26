@@ -13,19 +13,19 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, List, Optional
 
-from urlchecker.config.logging_config import WorkflowLogger, set_session_id
-from urlchecker.output.formatters import get_formatter
-from urlchecker.providers.abuseipdb import AbuseIPDBProvider
-from urlchecker.providers.google_sb import GoogleSafeBrowsingProvider
-from urlchecker.providers.link_analyzer import LinkAnalyzerProvider
-from urlchecker.providers.lookyloo import LookyLooProvider
-from urlchecker.providers.misp import MISPProvider
-from urlchecker.providers.urlscan import URLScanProvider
-from urlchecker.providers.virustotal import VirusTotalProvider
-from urlchecker.providers.whalebone import WhaleboneProvider
-from urlchecker.providers.whois import WhoisProvider
-from urlchecker.providers.yara import YaraProvider
-from urlchecker.workflows.orchestrator import WorkflowOrchestrator
+from url_checker_tools.config.logging_config import WorkflowLogger, set_session_id
+from url_checker_tools.output.formatters import get_formatter
+from url_checker_tools.providers.abuseipdb import AbuseIPDBProvider
+from url_checker_tools.providers.google_sb import GoogleSafeBrowsingProvider
+from url_checker_tools.providers.link_analyzer import LinkAnalyzerProvider
+from url_checker_tools.providers.lookyloo import LookyLooProvider
+from url_checker_tools.providers.misp import MISPProvider
+from url_checker_tools.providers.urlscan import URLScanProvider
+from url_checker_tools.providers.virustotal import VirusTotalProvider
+from url_checker_tools.providers.whalebone import WhaleboneProvider
+from url_checker_tools.providers.whois import WhoisProvider
+from url_checker_tools.providers.yara import YaraProvider
+from url_checker_tools.workflows.orchestrator import WorkflowOrchestrator
 
 
 class URLCheckerCLI:
@@ -221,7 +221,7 @@ Examples:
 
         # Get baseline providers (always included unless --all overrides everything)
         try:
-            from urlchecker.config.robot_config import ProviderConfig
+            from url_checker_tools.config.robot_config import ProviderConfig
 
             baseline_providers = ProviderConfig.get_baseline_providers()
         except Exception:
@@ -237,7 +237,7 @@ Examples:
         elif args.robot:
             # Robot mode default providers (overrides baseline)
             try:
-                from urlchecker.config.robot_config import RobotModeConfig
+                from url_checker_tools.config.robot_config import RobotModeConfig
 
                 providers = RobotModeConfig.get_robot_providers()
             except Exception:
@@ -605,7 +605,7 @@ Examples:
                             )
                         # In robot mode, record an error result so summaries include all enabled providers
                         if args.robot:
-                            from urlchecker.core.results import (
+                            from url_checker_tools.core.results import (
                                 ProviderResult,
                                 ThreatLevel,
                             )
@@ -637,7 +637,10 @@ Examples:
                     self.logger.log_error(target, provider_name, error_msg)
                 # In robot mode, append an error result so it's reflected in summaries and scoring
                 if args.robot:
-                    from urlchecker.core.results import ProviderResult, ThreatLevel
+                    from url_checker_tools.core.results import (
+                        ProviderResult,
+                        ThreatLevel,
+                    )
 
                     results.append(
                         ProviderResult(
@@ -669,7 +672,9 @@ Examples:
 
             # Scoring breakdown if requested
             if (args.score or args.score_detail) and results:
-                from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+                from url_checker_tools.analysis.unified_scorer import (
+                    UnifiedThreatScorer,
+                )
 
                 scorer = UnifiedThreatScorer()
                 scoring_data = scorer.calculate_threat_score(results)
@@ -703,7 +708,7 @@ Examples:
         # Robot mode automatically behaves like --format synthesis --score (basic scoring, not detailed)
         if args.robot:
             # Use unified scoring system for robot mode (always enabled)
-            from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+            from url_checker_tools.analysis.unified_scorer import UnifiedThreatScorer
 
             scorer = UnifiedThreatScorer()
             scoring_data = scorer.calculate_threat_score(results)
@@ -868,7 +873,7 @@ Examples:
 
         # Calculate scoring data if requested (for inclusion in logs)
         if (args.score or getattr(args, "score_detail", False)) and results:
-            from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+            from url_checker_tools.analysis.unified_scorer import UnifiedThreatScorer
 
             scorer = UnifiedThreatScorer()
             scoring_data = scorer.calculate_threat_score(results)
@@ -899,7 +904,9 @@ Examples:
             if args.score or getattr(args, "score_detail", False):
                 # Use pre-calculated scoring data
                 if not scoring_data:
-                    from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+                    from url_checker_tools.analysis.unified_scorer import (
+                        UnifiedThreatScorer,
+                    )
 
                     scorer = UnifiedThreatScorer()
                     scoring_data = scorer.calculate_threat_score(results)
@@ -1195,7 +1202,7 @@ Examples:
         synthesis = existing_synthesis.copy() if existing_synthesis else {}
 
         # Use unified scoring system for consistency with CLI display
-        from urlchecker.analysis.unified_scorer import UnifiedThreatScorer
+        from url_checker_tools.analysis.unified_scorer import UnifiedThreatScorer
 
         scorer = UnifiedThreatScorer()
         scoring_data = scorer.calculate_threat_score(results)
@@ -1517,7 +1524,7 @@ Examples:
         # Apply robot mode flags if robot mode is enabled
         if args.robot:
             try:
-                from urlchecker.config.robot_config import RobotModeConfig
+                from url_checker_tools.config.robot_config import RobotModeConfig
 
                 RobotModeConfig.apply_robot_flags(args)
             except Exception as e:
@@ -1710,7 +1717,7 @@ Examples:
         misp_data = {"event_id": None, "status": "not_attempted", "error": None}
 
         try:
-            from urlchecker.integrations.misp_reporter import MISPReporter
+            from url_checker_tools.integrations.misp_reporter import MISPReporter
 
             # Create MISP reporter
             reporter = MISPReporter(verbose=getattr(args, "verbose", False))

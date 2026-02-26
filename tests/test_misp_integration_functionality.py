@@ -9,8 +9,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from urlchecker.integrations.misp_reporter import MISPReporter
-from urlchecker.core.results import ProviderResult, ThreatLevel
+from url_checker_tools.integrations.misp_reporter import MISPReporter
+from url_checker_tools.core.results import ProviderResult, ThreatLevel
 
 
 class TestMISPIntegrationFunctionality:

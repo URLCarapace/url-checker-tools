@@ -184,7 +184,7 @@ Data snapshot:
 
 - File: src/url_checker_tools.py
 - Function: execute_robot_mode()
-- Utilities: create_logs(target_url, session_id, synthesis_json, detailed_json, base_dir) from urlchecker.core.session_logger
+- Utilities: create_logs(target_url, session_id, synthesis_json, detailed_json, base_dir) from url_checker_tools.core.session_logger
 
 Flow:
 1. After synthesis_json (".log") and detailed_json (".dlog") are finalized (including DNS/final URL enrichment and optional integration metadata), the logs are written to the configured base directory by create_logs().
