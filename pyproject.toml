@@ -1,38 +1,92 @@
 # https://github.com/pypa/setuptools/blob/main/docs/userguide/quickstart.rst
 [project]
 name = "url-checker-tools"
-version = "0.1.0"
+version = "0.2.0"
 description = "URL Checker Tools is a collection of tools that will be leveraged by the URL Checker Public Service"
 authors = [
-    {name = "Sam Kafai El-Khorassani", email = "sam.kafai@gmail.com"}
+    {name = "Sam Kafai El-Khorassani", email = "sam.kafai@gmail.com"},
+    {name = "Cédric Renzi", email = "cedric.renzi@laposte.net"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.13,<3.14"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: TODO",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
 dependencies = [
-    "celery[redis]>=5.3.0",
-    "keyring>=25.6.0",
-    "misp-modules>=3.0.2",
-    "pydantic>=2.11.7",
-    "pydantic-settings>=2.10.1",
-    "pylookyloo>=1.31.2",
-    "pymisp>=2.5.10",
-    "pypandora>=1.9.4",
-    "pysafebrowsing>=0.1.4",
-    "python-dotenv>=1.1.1",
-    "redis>=5.0.0",
-    "requests>=2.32.5",
+    "celery[redis]>=5.3.4",
+    "keyring>=25",
+    "misp-modules",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "pylookyloo>=1.31",
+    "pymisp",
+    "pypandora>=1.9",
+    "pysafebrowsing>=0.1",
+    "python-dotenv>=1.1",
+    "redis>=5",
+    "requests>=2",
     "vt-py>=0.21.0",
     "whois>=1.20240129.2",
     "yara-x>=1.5.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "build",
+    "black",
+    "cookiecutter",
+    "coverage",
+    "flake8",
+    #"flake8-pyproject",
+    "isort",
+    "pre-commit",
+    "pycln",
+    "pydocstyle",
+    "pytest",
+    "pytest-cov",
+    "pytest-xdist",
+]
+
+
+[project.urls]
+Homepage = "https://git.restena.lu/RESTENA/csirt/services/ngsoti/url-checker-tools"
+
+[project.scripts]
+url-checker = "url_checker_tools:main"
+#run-tests = "pytest tests/"
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["ansible*", "tests*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.json", "*.rst", "*.txt"]
+"hello" = ["*.msg"]
+
+[tool.bumpversion]
+version = "0.1.0"
+commit = true
+tag = true
+
+[tool.bumpversion.file."src/urlchecker/__init__.py"]
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
 [tool.black]
-#basepython = python3.11
-#line-length = 79
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -58,18 +112,10 @@ use_parentheses = true
 ensure_newline_before_comments = true
 line_length = 88
 
-[dependency-groups]
-dev = [
-    "pre-commit>=4.3.0",
-    "pytest>=8.4.1",
-    "pytest-cov>=7.0.0",
-    "pytest-xdist>=3.8.0",
-]
 # Optional integrations
-integrations = [
-    "pymisp==2.5.10",
-]
-
+#integrations = [
+#    "pymisp==2.5.10",
+#]
 
 [tool.pytest.ini_options]
 markers = [

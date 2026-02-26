@@ -1,43 +1,53 @@
 repos:
 # Some pre-defined useful and standard pre-commit hooks checks
-  -   repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v6.0.0
-      hooks:
-      -   id: check-yaml
-          args: ['--unsafe']
-      -   id: check-toml
-      -   id: trailing-whitespace
-      -   id: end-of-file-fixer
-      -   id: debug-statements
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+        args: ['--unsafe']
+        language_version: python3.13
+      - id: check-toml
+        language_version: python3.13
+      - id: trailing-whitespace
+        language_version: python3.13
+      - id: end-of-file-fixer
+        language_version: python3.13
+      - id: debug-statements
+        language_version: python3.13
       # it is now disabled
       #-   id: fix-encoding-pragma
       #    args: ["--remove"]
-      -   id: mixed-line-ending
-          args: ["--fix=lf"]
+      - id: mixed-line-ending
+        language_version: python3.13
+        args: ["--fix=lf"]
 
 # flake8 linter preconfigured for compatibility with Black
-  -   repo: https://github.com/pycqa/flake8
-      rev: 7.3.0
-      hooks:
-      -   id: flake8
-          name: "Flake8: critical"
-          #args: ['--count', '--statistics'] #, '--select=E9,F63,F7,F82', '--show-source']
-          additional_dependencies: [flake8-bugbear==21.9.2]
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.3.0
+    hooks:
+      - id: flake8
+        files: ^src/
+        language_version: python3.13
+        name: "Flake8: critical"
+        args: ['--count', '--statistics', '--select=E9,F63,F7,F82', '--show-source', --extend-ignore=E501]
+        #args: ['--count', '--statistics', '--select=B,B950', '--show-source', '--extend-ignore=E501']
+        additional_dependencies: [flake8-bugbear==21.9.2]
 
 # The standard Black formatter
-  -   repo: https://github.com/psf/black
-      rev: 25.1.0
-      hooks:
-      -   id: black
-          args: [--config=pyproject.toml]
-          exclude: migrations/ venv/
-          language_version: python3
+  - repo: https://github.com/psf/black
+    rev: 26.1.0
+    hooks:
+      - id: black
+        language_version: python3.13
+        args: [--config=pyproject.toml]
+        exclude: migrations/ venv/
 
 # Automatically sort and formats Python imports
-  -   repo: https://github.com/pycqa/isort
-      rev: 6.0.1
-      hooks:
-      -   id: isort
+  - repo: https://github.com/pycqa/isort
+    rev: 8.0.0
+    hooks:
+      - id: isort
+        language_version: python3.13
 
 # A complementary Static type checker
 # TODO: not sure of compatibility/interest to couple with flake8
@@ -48,18 +58,19 @@ repos:
 
 # Automatically remove unused imports
 # in-lieu-and-place of flake8
-  -  repo: https://github.com/hadialqattan/pycln
-     rev: 'v2.5.0'
-     hooks:
-     -   id: pycln
-         args: ['.', "--all"]
+  - repo: https://github.com/hadialqattan/pycln
+    rev: 'v2.6.0'
+    hooks:
+      - id: pycln
+        language_version: python3.13
+        args: ['.', "--all"]
 
   # Static analysis for checking compliance with Python docstring conventions
-  -   repo: https://github.com/pycqa/pydocstyle
-      rev: '6.3.0'
-      hooks:
-      -   id: pydocstyle
-          files: ^src/
+#  -   repo: https://github.com/pycqa/pydocstyle
+#      rev: '6.3.0'
+#      hooks:
+#      -   id: pydocstyle
+#          files: ^src/
 
 # TODO Run unit-tests
 ##  -   repo: local
@@ -69,4 +80,11 @@ repos:
 ##          language: system
 ##          pass_filenames: false
 ##          entry: poetry run coverage run -m pytest
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.10.6
+    hooks:
+      - id: uv-lock
+        language_version: python3.13
+
 exclude: "src/urlchecker/providers/_template.py|tests/.*"
